@@ -15,7 +15,7 @@ func main() {
 	fmt.Println("************************************************")
 	setupRouter.SetupRouter()
 
-	listener, err := net.Listen("tcp", ":8080")
+	listener, err := net.Listen("tcp", ":0")
 	if err != nil {
 		panic(err)
 	}
