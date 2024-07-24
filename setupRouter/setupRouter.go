@@ -4,9 +4,11 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gorilla/websocket"
+	"github.com/joho/godotenv"
 )
 
 var upgrader = websocket.Upgrader{
@@ -49,8 +51,15 @@ func SetupRouter() {
 	pool := NewPool()
 	go pool.Start()
 
+	err := godotenv.Load()
+	if err != nil {
+		log.Fatal("Error loading .env file")
+	}
+
 	// handle our `/ws` endpoint to the `serveWs` function
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
+		log.Println(r.Header.Get("Origin"))
+		log.Println(os.Getenv("GO_ALLOWED_ORIGIN"))
 		serverWs(pool, w, r)
 	})
 }
