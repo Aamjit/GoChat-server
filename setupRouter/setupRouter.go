@@ -8,7 +8,6 @@ import (
 	"time"
 
 	"github.com/gorilla/websocket"
-	"github.com/joho/godotenv"
 )
 
 var upgrader = websocket.Upgrader{
@@ -51,10 +50,12 @@ func SetupRouter() {
 	pool := NewPool()
 	go pool.Start()
 
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	os.Setenv("GO_ALLOWED_ORIGIN", "https://gochat-go.onrender.com")
+
+	// err := godotenv.Load()
+	// if err != nil {
+	// 	log.Fatal("Error loading .env file")
+	// }
 
 	// handle our `/ws` endpoint to the `serveWs` function
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
