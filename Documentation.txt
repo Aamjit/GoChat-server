@@ -1,0 +1,11 @@
+
+
+Set up information
+
+- Initialize a Go module and create main package & function
+- Install dependencies
+    - "github.com/gorilla/websocket"
+- insert "setupRoutes()" as route handler
+- Add http server and listener
+- Initialize "upgrader" variable to upgrade HTTP to web socket
+- Define "reader" function to listen to incoming messages to the socket
