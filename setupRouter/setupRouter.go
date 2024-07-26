@@ -28,6 +28,7 @@ func Upgrade(w http.ResponseWriter, r *http.Request) (*websocket.Conn, error) {
 
 // // define our WebSocket endpoint
 func serverWs(pool *Pool, w http.ResponseWriter, r *http.Request) {
+
 	// upgrade this connection to a WebSocket
 	conn, err := Upgrade(w, r)
 	if err != nil {
@@ -50,17 +51,18 @@ func SetupRouter() {
 	pool := NewPool()
 	go pool.Start()
 
-	os.Setenv("GO_ALLOWED_ORIGIN", "https://gochat-go.onrender.com")
-
-	// err := godotenv.Load()
-	// if err != nil {
-	// 	log.Fatal("Error loading .env file")
-	// }
+	// os.Setenv("GO_ALLOWED_ORIGIN", "https://gochat-go.onrender.com")
 
 	// handle our `/ws` endpoint to the `serveWs` function
 	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
-		log.Println(r.Header.Get("Origin"))
-		log.Println(os.Getenv("GO_ALLOWED_ORIGIN"))
+		log.Println("Allowed Origin: ", os.Getenv("GO_ALLOWED_ORIGIN"))
+		log.Println("Current Origin: ", r.Header.Get("Origin"))
+
+		if r.Header.Get("Origin") != os.Getenv("GO_ALLOWED_ORIGIN") {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+
 		serverWs(pool, w, r)
 	})
 }
