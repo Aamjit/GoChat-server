@@ -16,7 +16,6 @@ func main() {
 
 	// err = godotenv.Load(filepath.Join(pwd, "./.env"))
 	app_env := os.Getenv("APP_ENV")
-	fmt.Println(app_env)
 
 	if app_env == "DEV" {
 		err := godotenv.Load(".env.local")
@@ -24,12 +23,7 @@ func main() {
 			log.Fatal("Error loading .env file")
 		}
 	} else if app_env == "PRD" {
-		godotenv.Load()
-	}
-
-	envs := os.Environ()
-	for _, e := range envs {
-		fmt.Println(e)
+		panic(godotenv.Load())
 	}
 
 	fmt.Println("************************************************")
