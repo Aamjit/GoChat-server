@@ -6,8 +6,6 @@ import (
 	"log"
 	"net"
 	"net/http"
-	"os"
-	"path/filepath"
 
 	"github.com/Aamjit/GoChat-Go/setupRouter"
 	"github.com/joho/godotenv"
@@ -15,12 +13,8 @@ import (
 
 func main() {
 
-	pwd, err := os.Getwd()
-	if err != nil {
-		panic(err)
-	}
-
-	err = godotenv.Load(filepath.Join(pwd, "./.env"))
+	// err = godotenv.Load(filepath.Join(pwd, "./.env"))
+	err := godotenv.Load()
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
