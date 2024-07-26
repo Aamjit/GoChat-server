@@ -6,6 +6,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"os"
 
 	"github.com/Aamjit/GoChat-Go/setupRouter"
 	"github.com/joho/godotenv"
@@ -14,9 +15,21 @@ import (
 func main() {
 
 	// err = godotenv.Load(filepath.Join(pwd, "./.env"))
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
+	app_env := os.Getenv("APP_ENV")
+	fmt.Println(app_env)
+
+	if app_env == "DEV" {
+		err := godotenv.Load(".env.local")
+		if err != nil {
+			log.Fatal("Error loading .env file")
+		}
+	} else if app_env == "PRD" {
+		godotenv.Load()
+	}
+
+	envs := os.Environ()
+	for _, e := range envs {
+		fmt.Println(e)
 	}
 
 	fmt.Println("************************************************")

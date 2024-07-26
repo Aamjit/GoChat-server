@@ -7,5 +7,6 @@ RUN mkdir /app
 ADD . /app/
 WORKDIR /app
 RUN go mod download
+ENV APP_ENV=DEV
 RUN go build -o main
 CMD ["/app/main"]
