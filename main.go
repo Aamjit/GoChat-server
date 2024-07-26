@@ -6,7 +6,6 @@ import (
 	"log"
 	"net"
 	"net/http"
-	"os"
 
 	"github.com/Aamjit/GoChat-Go/setupRouter"
 	"github.com/joho/godotenv"
@@ -15,16 +14,16 @@ import (
 func main() {
 
 	// err = godotenv.Load(filepath.Join(pwd, "./.env"))
-	app_env := os.Getenv("APP_ENV")
+	// app_env := os.Getenv("APP_ENV")
 
-	if app_env == "DEV" {
-		err := godotenv.Load(".env.local")
-		if err != nil {
-			log.Fatal("Error loading .env file")
-		}
-	} else if app_env == "PRD" {
-		panic(godotenv.Load())
+	// if app_env == "DEV" {
+	err := godotenv.Load(".env.local")
+	if err != nil {
+		log.Fatal("Error loading .env file")
 	}
+	// } else if app_env == "PRD" {
+	// 	panic(godotenv.Load())
+	// }
 
 	fmt.Println("************************************************")
 	fmt.Println("Go-Chat Chat App v0.01")
